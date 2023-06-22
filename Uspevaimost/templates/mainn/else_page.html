@@ -1,0 +1,461 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/main_css.css' %}">
+<style>
+    ::placeholder{
+        color: black;
+    }
+    select option{
+        color: black;
+    }
+    .fioInput{
+        --c: #373B44;
+        --b: 3px;
+        --s: 4px;
+        padding: calc(.05em + var(--s)) calc(.3em + var(--s));
+        color: black;
+        --_p: var(--s);
+        background: conic-gradient(from 90deg at var(--b) var(--b), #0000 90deg, var(--c) 0) var(--_p) var(--_p)/calc(100% - var(--b) - 2 * var(--_p)) calc(100% - var(--b) - 2 * var(--_p));
+        transition: .3s linear, color 0s, background-color 0s;
+        outline: var(--b) solid #0000;
+        outline-offset: .2em;
+        font-family: Montserrat;
+        position: absolute;
+        left: 44.5%;
+        top: 85%;
+        height: 4%;
+        width: 10%;
+        font-weight: bold;
+        font-size: 1vw;
+        cursor: pointer;
+        border: none;
+        margin: .1em;
+        text-align: center;
+        opacity: .6;
+    }
+    .fioInput:hover,
+    .fioInput:focus-visible {
+        --_p: 0px;
+        outline-color: var(--c);
+        outline-offset: .05em;
+    }
+
+    .fioInput:active {
+        background: var(--c);
+        color: #dcf0f5;
+    }
+
+    .fioInput::placeholder {
+        color: #f7f028;
+    }
+</style>
+<nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+    <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                    Настройки
+                </a>
+
+                <div class="navbar-dropdown">
+                    <a class="navbar-item" href="/home/rasp/">
+                        расписание
+                    </a>
+                    <a class="navbar-item" href="/home/">
+                        список учеников
+                    </a>
+                    <a class="navbar-item" href="/home/teachers/">
+                        список учителей
+                    </a>
+                    <a class="navbar-item" href="/home/progress/">
+                        успеваемость учеников
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
+                    <a class="button is-light" href="/logout/">
+                        Выйти
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+<br><br><br>
+<table class="container" border="1">
+    {% if table == 7 %}
+        <tr>
+            <th>ФИО</th>
+            <th>Стаж работы</th>
+            <th>Предмет</th>
+        </tr>
+        {% for i in allUs %}
+            {% if i.userStatus == 'Учитель' %}
+                <tr>
+
+                    <td>{{ i.FIO }}</td>
+                    <td>{{ i.experience }}</td>
+                    <td>{{ i.predmet }}</td>
+
+                </tr>
+            {% endif %}
+        {% endfor %}
+    {% elif table == 0 %}
+        <tr>
+            <th>ФИО</th>
+            <th>Пол</th>
+            <th>Адрес</th>
+            <th>Класс</th>
+        </tr>
+        {% for i in allUs %}
+            {% if i.userStatus == 'Ученик' %}
+                <tr>
+
+                    <td>{{ i.FIO }}</td>
+                    <td>{{ i.gender }}</td>
+                    <td>{{ i.adress }}</td>
+                    <td>{{ i.clas }}</td>
+
+                </tr>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</table>
+{% if table == 3 %}
+    <form method="POST" action="/home/rasp/day/">
+        <input style="--c: #373B44;--b: 3px;--s:7px" type="date" name='day' class="a"
+               onchange="document.getElementById('Show3').removeAttribute('hidden')">
+        {% csrf_token %}
+        <select align="center" placeholder="Класс" name="clas" class="clasInput">
+            <option>1-А</option>
+                <option>1-Б</option>
+                <option>1-В</option>
+                <option>2-А</option>
+                <option>2-Б</option>
+                <option>2-В</option>
+                <option>3-А</option>
+                <option>3-Б</option>
+                <option>3-В</option>
+                <option>4-А</option>
+                <option>4-Б</option>
+                <option>4-В</option>
+                <option>5-А</option>
+                <option>5-Б</option>
+                <option>5-В</option>
+                <option>6-А</option>
+                <option>6-Б</option>
+                <option>6-В</option>
+                <option>7-А</option>
+                <option>7-Б</option>
+                <option>7-В</option>
+                <option>8-А</option>
+                <option>8-Б</option>
+                <option>8-В</option>
+                <option>9-А</option>
+                <option>9-Б</option>
+                <option>9-В</option>
+        </select>
+        <button style="--clr:#0FF0FC" type="submit" class="addBtnnnn1" id="Show3" hidden><span>Показать</span><i></i>
+        </button>
+    </form>
+    <form method="POST" action="/home/rasp/add/">
+        {% csrf_token %}
+        <button style="--clr:#0FF0FC" type="submit" class="addBtnn1"><span>Добавить</span><i></i></button>
+    </form>
+{% elif table == 6 %}
+    <form method="POST" action="/home/rasp/raspNextDay/">
+        {% csrf_token %}
+        <input type="hidden" name="date" id="dateMet">
+        <input type="hidden" name="clas" id="clasMet">
+        <script>
+            document.addEventListener('DOMContentLoaded', function (event) {
+                document.getElementById('dateMet').value = '{{ raspp.date }}';
+            });
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function (event) {
+                document.getElementById('clasMet').value = '{{ raspp.clas }}';
+            });
+        </script>
+        <button style="--clr:#0FF0FC" class="date"><span>Следующий</span><i></i></button>
+    </form>
+    <form method="POST" action="/home/rasp/raspPrevDay/">
+        {% csrf_token %}
+        <input type="hidden" name="date" id="date2Met">
+        <input type="hidden" name="clas" id="clas2Met">
+        <script>
+            document.addEventListener('DOMContentLoaded', function (event) {
+                document.getElementById('date2Met').value = '{{ raspp.date }}';
+            });
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function (event) {
+                document.getElementById('clas2Met').value = '{{ raspp.clas }}';
+            });
+        </script>
+        <button style="--clr:#0FF0FC" class="date2"><span>Предыдущий</span><i></i></button>
+    </form>
+    <table class="container" border="1">
+        <tr>
+            {% if raspp.date %}
+                <th rowspan="8" align="center" width="140px">{{ raspp.date|date:"Y-m-d" }}</th>
+            {% else %}
+                <th rowspan="8" align="center" width="140px">{{ d }}</th>
+            {% endif %}
+            <th>предмет</th>
+            <th width="100px">дз</th>
+
+        </tr>
+        <tr>
+            {% if predm.p1 %}
+                <td>{{ predm.p1 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+            {% if dz.d1 %}
+                <td>{{ dz.d1 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+        </tr>
+        <tr>
+            {% if predm.p2 %}
+                <td>{{ predm.p2 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+            {% if dz.d2 %}
+                <td>{{ dz.d2 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+
+        </tr>
+        <tr>
+            {% if predm.p3 %}
+                <td>{{ predm.p3 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+            {% if dz.d3 %}
+                <td>{{ dz.d3 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+
+        </tr>
+        <tr>
+            {% if predm.p4 %}
+                <td>{{ predm.p4 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+            {% if dz.d4 %}
+                <td>{{ dz.d4 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+
+        </tr>
+        <tr>
+            {% if predm.p5 %}
+                <td>{{ predm.p5 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+            {% if dz.d5 %}
+                <td>{{ dz.d5 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+
+        </tr>
+        <tr>
+            {% if predm.p6 %}
+                <td>{{ predm.p6 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+            {% if dz.d6 %}
+                <td>{{ dz.d6 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+
+        </tr>
+        <tr>
+            {% if predm.p7 %}
+                <td>{{ predm.p7 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+            {% if dz.d7 %}
+                <td>{{ dz.d7 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+
+        </tr>
+    </table>
+{% elif table == 5 %}
+    <form method="POST" action="/changeRasp/">
+        {% csrf_token %}
+        <input style="--c: #373B44;--b: 3px;--s:7px" type="date" name='dayraspp' class="a"
+               onchange="document.getElementById('showMet').removeAttribute('hidden')">
+        <select align="center" placeholder="Класс" name="clas" class="clasInput">
+            <option>1-А</option>
+                <option>1-Б</option>
+                <option>1-В</option>
+                <option>2-А</option>
+                <option>2-Б</option>
+                <option>2-В</option>
+                <option>3-А</option>
+                <option>3-Б</option>
+                <option>3-В</option>
+                <option>4-А</option>
+                <option>4-Б</option>
+                <option>4-В</option>
+                <option>5-А</option>
+                <option>5-Б</option>
+                <option>5-В</option>
+                <option>6-А</option>
+                <option>6-Б</option>
+                <option>6-В</option>
+                <option>7-А</option>
+                <option>7-Б</option>
+                <option>7-В</option>
+                <option>8-А</option>
+                <option>8-Б</option>
+                <option>8-В</option>
+                <option>9-А</option>
+                <option>9-Б</option>
+                <option>9-В</option>
+        </select>
+        <button style="--clr:#0FF0FC" id="showMet" type="submit" class="addBtnn1" hidden>
+            <span>Сохранить</span><i></i></button>
+        <table class="container c" border="1">
+            <tr>
+                <th rowspan="8" align="center" width="140px"></th>
+                <th>предмет</th>
+                <th>дз</th>
+
+            </tr>
+            <tr>
+                <td><select name='pr1'>
+                  <option>Математика</option>
+                  <option>Русский</option>
+                  <option>Биология</option>
+                  <option>Химия</option>
+                  <option>Физра</option>
+                  <option>ОБЖ</option>
+                  <option>Физика</option>
+                </select></td>
+                <td>Добавляет учитель</td>
+
+            </tr>
+            <tr>
+                <td><select name='pr2'>
+                  <option>Математика</option>
+                  <option>Русский</option>
+                  <option>Биология</option>
+                  <option>Химия</option>
+                  <option>Физра</option>
+                  <option>ОБЖ</option>
+                  <option>Физика</option>
+                </select></td>
+                <td>Добавляет учитель</td>
+
+            </tr>
+            <tr>
+                <td><select name='pr3'>
+                  <option>Математика</option>
+                  <option>Русский</option>
+                  <option>Биология</option>
+                  <option>Химия</option>
+                  <option>Физра</option>
+                  <option>ОБЖ</option>
+                  <option>Физика</option>
+                </select></td>
+                <td>Добавляет учитель</td>
+
+            </tr>
+            <tr>
+                <td><select name='pr4'>
+                  <option>Математика</option>
+                  <option>Русский</option>
+                  <option>Биология</option>
+                  <option>Химия</option>
+                  <option>Физра</option>
+                  <option>ОБЖ</option>
+                  <option>Физика</option>
+                </select></td>
+                <td>Добавляет учитель</td>
+
+            </tr>
+            <tr>
+                <td><select name='pr5'>
+                  <option>Математика</option>
+                  <option>Русский</option>
+                  <option>Биология</option>
+                  <option>Химия</option>
+                  <option>Физра</option>
+                  <option>ОБЖ</option>
+                  <option>Физика</option>
+                </select></td>
+                <td>Добавляет учитель</td>
+
+            </tr>
+            <tr>
+                <td><select name='pr6'>
+                  <option>Математика</option>
+                  <option>Русский</option>
+                  <option>Биология</option>
+                  <option>Химия</option>
+                  <option>Физра</option>
+                  <option>ОБЖ</option>
+                  <option>Физика</option>
+                </select></td>
+                <td>Добавляет учитель</td>
+
+            </tr>
+            <tr>
+                <td><select name='pr7'>
+                  <option>Математика</option>
+                  <option>Русский</option>
+                  <option>Биология</option>
+                  <option>Химия</option>
+                  <option>Физра</option>
+                  <option>ОБЖ</option>
+                  <option>Физика</option>
+                </select></td>
+                <td>Добавляет учитель</td>
+
+            </tr>
+        </table>
+    </form>
+{% elif table == 33 %}
+    <form method="POST" action="/home/progress/student/">
+        {% csrf_token %}
+        <select align="center" placeholder="ФИО" name="fio" class="clasInput" id="select_class">
+            {% for i in allUs %}
+                {% if i.userStatus == 'Ученик' %}
+                    <option>{{ i.FIO }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <button style="--clr:#0FF0FC" id="showMet" type="submit" class="addBtnn1">
+            <span>Показать</span><i></i></button>
+    </form>
+{% endif %}

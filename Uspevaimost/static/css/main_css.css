@@ -1,0 +1,791 @@
+body, html {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    height: 100vh;
+    overflow-x: hidden;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
+
+
+.blue {
+    color: #185875;
+}
+
+.yellow {
+    color: #FFF842;
+}
+
+
+}
+.c{
+    top: 10%;
+}
+
+table {
+	width: 800px;
+	border-collapse: collapse;
+	overflow: hidden;
+	box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+th,
+td {
+	padding: 15px;
+	background-color: rgba(255,255,255,0.2);
+	color: #fff;
+}
+
+th {
+	text-align: left;
+}
+
+thead {
+	th {
+		background-color: #55608f;
+	}
+}
+
+tbody {
+	tr {
+		&:hover {
+			background-color: rgba(255,255,255,0.3);
+		}
+	}
+	td {
+		position: relative;
+		&:hover {
+			&:before {
+				content: "";
+				position: absolute;
+				left: 0;
+				right: 0;
+				top: -9999px;
+				bottom: -9999px;
+				background-color: rgba(255,255,255,0.2);
+				z-index: -1;
+			}
+		}
+	}
+}
+
+button {
+          position: absolute;
+          left: 20vw;
+          top: 50%;
+          background: #d19292;
+          color: #fff;
+          text-decoration: none;
+          text-transform: uppercase;
+          text-align:center;
+          border: none;
+          letter-spacing: 0.1rem;
+          font-size: 1rem;
+          padding: 1rem 3rem;
+          transition: 0.2s;
+        }
+
+        button:hover {
+          letter-spacing: 0.2rem;
+          padding: 1.1rem 3.1rem;
+          background: var(--clr);
+          color: var(--clr);
+          /* box-shadow: 0 0 35px var(--clr); */
+          animation: box 3s infinite;
+        }
+
+        button::before {
+          content: "";
+          position: absolute;
+          inset: 2px;
+          background: #272822;
+        }
+
+        button span {
+          position: relative;
+          float: right;
+          top: -85%;
+          left: 60%;
+          text-align: center;
+          font-size: 1vw;
+          z-index: 1;
+        }
+        button i {
+          position: absolute;
+          inset: 0;
+          display: block;
+        }
+
+        button i::before {
+          content: "";
+          position: absolute;
+          width: 10px;
+          height: 2px;
+          left: 80%;
+          top: -2px;
+          border: 2px solid var(--clr);
+          background: #272822;
+          transition: 0.2s;
+        }
+
+        button:hover i::before {
+          width: 15px;
+          left: 20%;
+          animation: move 3s infinite;
+        }
+
+        button i::after {
+          content: "";
+          position: absolute;
+          width: 10px;
+          height: 2px;
+          left: 20%;
+          bottom: -2px;
+          border: 2px solid var(--clr);
+          background: #272822;
+          transition: 0.2s;
+        }
+
+        button:hover i::after {
+          width: 15px;
+          left: 80%;
+          animation: move 3s infinite;
+        }
+        @keyframes move {
+          0% {
+            transform: translateX(0);
+          }
+          50% {
+            transform: translateX(5px);
+          }
+          100% {
+            transform: translateX(0);
+          }
+        }
+@keyframes box {
+          0% {
+            box-shadow: #27272c;
+          }
+          50% {
+            box-shadow: 0 0 25px var(--clr);
+          }
+          100% {
+            box-shadow: #27272c;
+          }
+        }
+
+
+.addBtn {
+    position: absolute;
+    left: 36%;
+    top: 90%;
+    height: 6%;
+}
+
+
+.addBtnn1 {
+    position: absolute;
+    left: 44.5%;
+    top: 91%;
+    height: 6%;
+    width: 10vw;
+    height: 3vw;
+}
+
+
+.addBtnMet {
+
+    position: absolute;
+    left: 45%;
+    top: 91%;
+    height: 6%;
+
+
+}
+
+
+.addBtnnn1 {
+
+    position: absolute;
+    left: 44.5%;
+    top: 71%;
+    height: 6%;
+    width: 10vw;
+    height: 3vw;
+
+}
+.addBtnnnn1{
+
+    position: absolute;
+    left: 44.5%;
+    top: 61%;
+    height: 6%;
+    width: 10vw;
+    height: 3vw;
+
+}
+
+.delBtn {
+
+    position: absolute;
+    left: 56%;
+    top: 90%;
+    height: 6%;
+
+
+}
+
+
+.idInput {
+    --c: #373B44;
+    --b: 3px;
+    --s: 4px;
+    padding: calc(.05em + var(--s)) calc(.3em + var(--s));
+    color: white;
+    --_p: var(--s);
+    background: conic-gradient(from 90deg at var(--b) var(--b), #0000 90deg, var(--c) 0) var(--_p) var(--_p)/calc(100% - var(--b) - 2 * var(--_p)) calc(100% - var(--b) - 2 * var(--_p));
+    transition: .3s linear, color 0s, background-color 0s;
+    outline: var(--b) solid #0000;
+    outline-offset: .2em;
+    font-family: Montserrat;
+    position: absolute;
+    left: 53%;
+    top: 77%;
+    height: 4%;
+    width: 12%;
+    font-weight: bold;
+    font-size: 1vw;
+    cursor: pointer;
+    border: none;
+    margin: .1em;
+    text-align: center;
+    opacity: .6;
+}
+
+.idInput:hover,
+.idInput:focus-visible {
+    --_p: 0px;
+    outline-color: var(--c);
+    outline-offset: .05em;
+}
+
+.idInput:active {
+    background: var(--c);
+    color: #373B44;
+}
+
+.idInput::placeholder {
+    color: white;
+}
+
+
+.clasInput {
+    --c: #373B44;
+    --b: 3px;
+    --s: 4px;
+    padding: calc(.05em + var(--s)) calc(.3em + var(--s));
+    color: #f7f028;
+    --_p: var(--s);
+    background: conic-gradient(from 90deg at var(--b) var(--b), #0000 90deg, var(--c) 0) var(--_p) var(--_p)/calc(100% - var(--b) - 2 * var(--_p)) calc(100% - var(--b) - 2 * var(--_p));
+    transition: .3s linear, color 0s, background-color 0s;
+    outline: var(--b) solid #0000;
+    outline-offset: .2em;
+    font-family: Montserrat;
+    position: absolute;
+    left: 44.5%;
+    top: 75%;
+    height: 4%;
+    width: 10%;
+    font-weight: bold;
+    font-size: 1vw;
+    cursor: pointer;
+    border: none;
+    margin: .1em;
+    text-align: center;
+    opacity: .6;
+}
+
+.clasInput:hover,
+.clasInput:focus-visible {
+    --_p: 0px;
+    outline-color: var(--c);
+    outline-offset: .05em;
+}
+
+.clasInput:active {
+    background: var(--c);
+    color: #dcf0f5;
+}
+
+.clasInput::placeholder {
+    color: #f7f028;
+}
+
+.box {
+    width: 11%;
+
+}
+
+.box select {
+    --c: #373B44;
+    --b: 3px;
+    --s: 4px;
+    padding: calc(.05em + var(--s)) calc(.3em + var(--s));
+    color: #373B44;
+    --_p: var(--s);
+    background: conic-gradient(from 90deg at var(--b) var(--b), #0000 90deg, var(--c) 0) var(--_p) var(--_p)/calc(100% - var(--b) - 2 * var(--_p)) calc(100% - var(--b) - 2 * var(--_p));
+    transition: .3s linear, color 0s, background-color 0s;
+    outline: var(--b) solid #0000;
+    outline-offset: .2em;
+    font-family: Montserrat;
+    font-color: #dcf0f5;
+    position: absolute;
+    left: 34.5%;
+    top: 77%;
+    height: 6%;
+    width: 10%;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    font-weight: bold;
+    font-size: 1vw;
+    cursor: pointer;
+    border: none;
+    margin: .1em;
+
+}
+
+.box select:hover,
+.box select:focus-visible {
+    --_p: 0px;
+    outline-color: var(--c);
+    outline-offset: .05em;
+}
+
+.box select:active {
+    background: var(--c);
+    color: #dcf0f5;
+}
+
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
+.pup {
+    border-radius: 19px;
+    font-family: Montserrat;
+    position: absolute;
+    left: 20%;
+    font-size: 1vw;
+    font-weight: bold;
+    color: white;
+}
+
+.tec {
+    border-radius: 19px;
+    font-family: Montserrat;
+    position: absolute;
+    left: 30%;
+    font-size: 1vw;
+    font-weight: bold;
+    color: white;
+}
+
+input[type="date"] {
+    --c: #373B44;
+    --b: 3px;
+    --s: 4px;
+    padding: calc(.05em + var(--s)) calc(.3em + var(--s));
+    color: #f7f028;
+    --_p: var(--s);
+    background: conic-gradient(from 90deg at var(--b) var(--b), #0000 90deg, var(--c) 0) var(--_p) var(--_p)/calc(100% - var(--b) - 2 * var(--_p)) calc(100% - var(--b) - 2 * var(--_p));
+    transition: .3s linear, color 0s, background-color 0s;
+    outline: var(--b) solid #0000;
+    outline-offset: .2em;
+    font-family: Montserrat;
+    position: absolute;
+    left: 42%;
+    top: 82%;
+    height: 6%;
+    width: 15%;
+    font-weight: bold;
+    font-size: 1vw;
+    cursor: pointer;
+    border: none;
+    margin: .1em;
+    text-align: center;
+    opacity: .6;
+}
+
+.a:hover,
+.a:focus-visible {
+    --_p: 0px;
+    outline-color: var(--c);
+    outline-offset: .05em;
+}
+
+.a:active {
+    background: var(--c);
+    color: #dcf0f5;
+}
+
+::-webkit-calendar-picker-indicator {
+    background-color: #1d1d29;
+    padding: 2px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+
+.fioInput {
+    --c: #373B44;
+    --b: 3px;
+    --s: 4px;
+    padding: calc(.05em + var(--s)) calc(.3em + var(--s));
+    color: #dcf0f5;
+    --_p: var(--s);
+    background: conic-gradient(from 90deg at var(--b) var(--b), #0000 90deg, var(--c) 0) var(--_p) var(--_p)/calc(100% - var(--b) - 2 * var(--_p)) calc(100% - var(--b) - 2 * var(--_p));
+    transition: .3s linear, color 0s, background-color 0s;
+    outline: var(--b) solid #0000;
+    outline-offset: .2em;
+    font-family: Montserrat;
+    position: absolute;
+    left: 44.5%;
+    top: 55%;
+    height: 4%;
+    width: 10%;
+    font-weight: bold;
+    font-size: 1vw;
+    cursor: pointer;
+    border: none;
+    margin: .1em;
+    text-align: center;
+    opacity: .6;
+}
+
+.fioInput:hover,
+.fioInput:focus-visible {
+    --_p: 0px;
+    outline-color: var(--c);
+    outline-offset: .05em;
+}
+
+.fioInput:active {
+    background: var(--c);
+    color: #dcf0f5;
+}
+
+
+.fioInput {
+    --c: #373B44;
+    --b: 3px;
+    --s: 4px;
+    padding: calc(.05em + var(--s)) calc(.3em + var(--s));
+    color: #dcf0f5;
+    --_p: var(--s);
+    background: conic-gradient(from 90deg at var(--b) var(--b), #0000 90deg, var(--c) 0) var(--_p) var(--_p)/calc(100% - var(--b) - 2 * var(--_p)) calc(100% - var(--b) - 2 * var(--_p));
+    transition: .3s linear, color 0s, background-color 0s;
+    outline: var(--b) solid #0000;
+    outline-offset: .2em;
+    font-family: Montserrat;
+    position: absolute;
+    left: 44.5%;
+    top: 55%;
+    height: 4%;
+    width: 10%;
+    font-weight: bold;
+    font-size: 1vw;
+    cursor: pointer;
+    border: none;
+    margin: .1em;
+    text-align: center;
+    opacity: .6;
+}
+
+.fioInput:hover,
+.fioInput:focus-visible {
+    --_p: 0px;
+    outline-color: var(--c);
+    outline-offset: .05em;
+}
+
+.fioInput:active {
+    background: var(--c);
+    color: #dcf0f5;
+}
+
+
+.numInput {
+    --c: #373B44;
+    --b: 3px;
+    --s: 4px;
+    padding: calc(.05em + var(--s)) calc(.3em + var(--s));
+    color: #dcf0f5;
+    --_p: var(--s);
+    background: conic-gradient(from 90deg at var(--b) var(--b), #0000 90deg, var(--c) 0) var(--_p) var(--_p)/calc(100% - var(--b) - 2 * var(--_p)) calc(100% - var(--b) - 2 * var(--_p));
+    transition: .3s linear, color 0s, background-color 0s;
+    outline: var(--b) solid #0000;
+    outline-offset: .2em;
+    font-family: Montserrat;
+    position: absolute;
+    left: 44.5%;
+    top: 63%;
+    height: 4%;
+    width: 10%;
+    font-weight: bold;
+    font-size: 1vw;
+    cursor: pointer;
+    border: none;
+    margin: .1em;
+    text-align: center;
+    opacity: .6;
+}
+
+.numInput:hover,
+.numInput:focus-visible {
+    --_p: 0px;
+    outline-color: var(--c);
+    outline-offset: .05em;
+}
+
+.numInput:active {
+    background: var(--c);
+    color: #dcf0f5;
+}
+
+
+.predmInput {
+    --c: #373B44;
+    --b: 3px;
+    --s: 4px;
+    padding: calc(.05em + var(--s)) calc(.3em + var(--s));
+    color: #dcf0f5;
+    --_p: var(--s);
+    background: conic-gradient(from 90deg at var(--b) var(--b), #0000 90deg, var(--c) 0) var(--_p) var(--_p)/calc(100% - var(--b) - 2 * var(--_p)) calc(100% - var(--b) - 2 * var(--_p));
+    transition: .3s linear, color 0s, background-color 0s;
+    outline: var(--b) solid #0000;
+    outline-offset: .2em;
+    font-family: Montserrat;
+    position: absolute;
+    left: 44.5%;
+    top: 71.5%;
+    height: 4%;
+    width: 10%;
+    font-weight: bold;
+    font-size: 1vw;
+    cursor: pointer;
+    border: none;
+    margin: .1em;
+    text-align: center;
+    opacity: .6;
+}
+
+.predmInput:hover,
+.predmInput:focus-visible {
+    --_p: 0px;
+    outline-color: var(--c);
+    outline-offset: .05em;
+}
+
+.predmInput:active {
+    background: var(--c);
+    color: #dcf0f5;
+}
+
+
+.in {
+    width: 30px;
+}
+
+
+.date {
+    height: 3vw;
+    width: 12vw;
+    position: absolute;
+    left: 64%;
+    top: 80%;
+
+}
+
+.date span {
+    position: relative;
+    text-align: center;
+    float: left;
+    left: -55%;
+    top: -80%;
+    z-index: 1;
+    font-size: 1vw;
+}
+
+.date2 {
+    height: 3vw;
+    width: 12vw;
+    position: absolute;
+    left: 26%;
+    top: 80%;
+}
+
+.date2 span {
+    position: relative;
+    text-align: center;
+    float: left;
+    left: -55%;
+    top: -80%;
+    z-index: 1;
+    font-size: 1vw;
+
+
+}
+
+.graph {
+    position: absolute;
+    top: 10%;
+    left: 33%;
+    width: 35vw;
+    height: 30vw;
+}
+
+#menuToggle {
+    display: block;
+    position: absolute;
+    top: 50px;
+    left: 20px;
+
+    z-index: 1;
+
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+#menuToggle a {
+    text-decoration: none;
+    color: #232323;
+
+    transition: color 0.3s ease;
+}
+
+#menuToggle a:hover {
+    color: tomato;
+}
+
+
+#menuToggle input {
+    display: block;
+    width: 40px;
+    height: 32px;
+    position: absolute;
+    top: -7px;
+    left: -5px;
+
+    cursor: pointer;
+
+    opacity: 0; /* hide this */
+    z-index: 2; /* and place it over the hamburger */
+
+    -webkit-touch-callout: none;
+}
+
+/*
+ * Just a quick hamburger
+ */
+#menuToggle span {
+    display: block;
+    width: 33px;
+    height: 4px;
+    margin-bottom: 5px;
+    position: relative;
+
+    background: #cdcdcd;
+    border-radius: 3px;
+
+    z-index: 1;
+
+    transform-origin: 4px 0px;
+
+    transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0),
+    background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0),
+    opacity 0.55s ease;
+}
+
+#menuToggle span:first-child {
+    transform-origin: 0% 0%;
+}
+
+#menuToggle span:nth-last-child(2) {
+    transform-origin: 0% 100%;
+}
+
+/*
+ * Transform all the slices of hamburger
+ * into a crossmark.
+ */
+#menuToggle input:checked ~ span {
+    opacity: 1;
+    transform: rotate(45deg) translate(-2px, -1px);
+    background: #232323;
+}
+
+/*
+ * But let's hide the middle one.
+ */
+#menuToggle input:checked ~ span:nth-last-child(3) {
+    opacity: 0;
+    transform: rotate(0deg) scale(0.2, 0.2);
+}
+
+/*
+ * Ohyeah and the last one should go the other direction
+ */
+#menuToggle input:checked ~ span:nth-last-child(2) {
+    transform: rotate(-45deg) translate(0, -1px);
+}
+
+/*
+ * Make this absolute positioned
+ * at the top left of the screen
+ */
+#menu {
+    position: absolute;
+    width: 300px;
+    margin: -100px 0 0 -50px;
+    padding: 50px;
+    padding-top: 125px;
+
+    background: #ededed;
+    list-style-type: none;
+    -webkit-font-smoothing: antialiased;
+    /* to stop flickering of text in safari */
+
+    transform-origin: 0% 0%;
+    transform: translate(-100%, 0);
+
+    transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+}
+
+#menu li {
+    padding: 10px 0;
+    font-size: 22px;
+}
+
+/*
+ * And let's slide it in from the left
+ */
+#menuToggle input:checked ~ ul {
+    transform: none;
+}

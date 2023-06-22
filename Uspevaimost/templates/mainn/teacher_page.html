@@ -1,0 +1,698 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/main_css.css' %}">
+<style>
+    select option{
+        color: black;
+    }
+    ::placeholder{
+        color: black;
+    }
+</style>
+<nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+    <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                    Настройки
+                </a>
+
+                <div class="navbar-dropdown">
+                    <a class="navbar-item" href="/home/jurnal/">
+                        оценки
+                    </a>
+                    <a class="navbar-item" href="/home/rasp/">
+                        расписание
+                    </a>
+                    <a class="navbar-item" href="/home/">
+                        список учеников
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
+                    <a class="button is-light" href="/logout/">
+                        Выйти
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+<br><br><br>
+{% if table == 0 %}
+    <table class="container" border="1">
+        <tr>
+            <th>Класс</th>
+            <th>Пол</th>
+            <th>Адрес</th>
+            <th>ФИО</th>
+        </tr>
+        {% for i in allUs %}
+            {% if i.userStatus == "Ученик" %}
+                <tr>
+                    <td>{{ i.clas }}</td>
+                    <td>{{ i.gender }}</td>
+                    <td>{{ i.adress }}</td>
+                    <td>{{ i.FIO }}</td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+{% elif table == 3 %}
+    <form method="POST" action="/home/rasp/day/">
+        <input style="--c: #373B44;--b: 3px;--s:7px" type="date" name='day' class="a"
+               onchange="document.getElementById('Show2').removeAttribute('hidden')">
+        {% csrf_token %}
+        <select align="center" placeholder="Класс" name="clas" class="clasInput">
+            <option>1-А</option>
+                <option>1-Б</option>
+                <option>1-В</option>
+                <option>2-А</option>
+                <option>2-Б</option>
+                <option>2-В</option>
+                <option>3-А</option>
+                <option>3-Б</option>
+                <option>3-В</option>
+                <option>4-А</option>
+                <option>4-Б</option>
+                <option>4-В</option>
+                <option>5-А</option>
+                <option>5-Б</option>
+                <option>5-В</option>
+                <option>6-А</option>
+                <option>6-Б</option>
+                <option>6-В</option>
+                <option>7-А</option>
+                <option>7-Б</option>
+                <option>7-В</option>
+                <option>8-А</option>
+                <option>8-Б</option>
+                <option>8-В</option>
+                <option>9-А</option>
+                <option>9-Б</option>
+                <option>9-В</option>
+        </select>
+        <button style="--clr:#0FF0FC" type="submit" class="addBtnnnn1" id="Show2" hidden><span>Показать</span><i></i>
+        </button>
+    </form>
+    <form method="POST" action="/home/rasp/add/">
+        {% csrf_token %}
+        <button style="--clr:#0FF0FC" type="submit" class="addBtnn1"><span>Добавить</span><i></i></button>
+    </form>
+{% elif table == 5 %}
+    <form method="POST" action="/changeRasp/">
+        {% csrf_token %}
+        <input style="--c: #373B44;--b: 3px;--s:7px" type="date" name='dayraspp' class="a"
+               onchange="document.getElementById('showMet').removeAttribute('hidden')">
+        <select align="center" placeholder="Класс" name="clas" class="clasInput">
+            <option>1-А</option>
+                <option>1-Б</option>
+                <option>1-В</option>
+                <option>2-А</option>
+                <option>2-Б</option>
+                <option>2-В</option>
+                <option>3-А</option>
+                <option>3-Б</option>
+                <option>3-В</option>
+                <option>4-А</option>
+                <option>4-Б</option>
+                <option>4-В</option>
+                <option>5-А</option>
+                <option>5-Б</option>
+                <option>5-В</option>
+                <option>6-А</option>
+                <option>6-Б</option>
+                <option>6-В</option>
+                <option>7-А</option>
+                <option>7-Б</option>
+                <option>7-В</option>
+                <option>8-А</option>
+                <option>8-Б</option>
+                <option>8-В</option>
+                <option>9-А</option>
+                <option>9-Б</option>
+                <option>9-В</option>
+        </select>
+        <button style="--clr:#0FF0FC" id="showMet" type="submit" class="addBtnn1" hidden>
+            <span>Сохранить</span><i></i></button>
+        <table class="container c" border="1">
+            <tr>
+                <th rowspan="8" align="center" width="140px"></th>
+                <th>предмет</th>
+                <th>дз</th>
+                <th>Тема</th>
+            </tr>
+            <tr>
+                <td>Добавляет методист</td>
+                <td><input name='dz1'></td>
+                <td><input name = 'topic1'></td>
+            </tr>
+            <tr>
+                <td>Добавляет методист</td>
+                <td><input name='dz2'></td>
+                <td><input name = 'topic2'></td>
+            </tr>
+            <tr>
+                <td>Добавляет методист</td>
+                <td><input name='dz3'></td>
+                <td><input name = 'topic3'></td>
+            </tr>
+            <tr>
+                <td>Добавляет методист</td>
+                <td><input name='dz4'></td>
+                <td><input name = 'topic4'></td>
+            </tr>
+            <tr>
+                <td>Добавляет методист</td>
+                <td><input name='dz5'></td>
+                <td><input name = 'topic5'></td>
+            </tr>
+            <tr>
+                <td>Добавляет методист</td>
+                <td><input name='dz6'></td>
+                <td><input name = 'topic6'></td>
+            </tr>
+            <tr>
+                <td>Добавляет методист</td>
+                <td><input name='dz7'></td>
+                <td><input name = 'topic7'></td>
+            </tr>
+        </table>
+{% elif table == 1 %}
+    <form method="POST" action="/home/rasp/raspNextDay/">
+        {% csrf_token %}
+        <input type="hidden" name="date" id="dateTeach">
+        <input type="hidden" name="clas" id="clasTeach">
+        <script>
+            document.addEventListener('DOMContentLoaded', function (event) {
+                document.getElementById('dateTeach').value = '{{ raspp.date }}';
+            });
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function (event) {
+                document.getElementById('clasTeach').value = '{{ raspp.clas }}';
+            });
+        </script>
+        <button style="--clr:#0FF0FC" class="date"><span>Cледующий</span><i></i></button>
+    </form>
+    <form method="POST" action="/home/rasp/raspPrevDay/">
+        {% csrf_token %}
+        <input type="hidden" name="date" id="date2Teach">
+        <input type="hidden" name="clas" id="clas2Teach">
+        <script>
+            document.addEventListener('DOMContentLoaded', function (event) {
+                document.getElementById('date2Teach').value = '{{ raspp.date }}';
+            });
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function (event) {
+                document.getElementById('clas2Teach').value = '{{ raspp.clas }}';
+            });
+        </script>
+        <button style="--clr:#0FF0FC" class="date2"><span>Предыдущий</span><i></i></button>
+    </form>
+    <table class="container" border="1">
+        <tr>
+            {% if raspp.date %}
+                <th rowspan="8" align="center" width="140px">{{ raspp.date|date:"Y-m-d" }}</th>
+            {% else %}
+                <th rowspan="8" align="center" width="140px">{{ d }}</th>
+            {% endif %}
+            <th>предмет</th>
+            <th width="100px">дз</th>
+
+        </tr>
+        <tr>
+            {% if predm.p1 %}
+                <td>{{ predm.p1 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+            {% if dz.d1 %}
+                <td>{{ dz.d1 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+        </tr>
+        <tr>
+            {% if predm.p2 %}
+                <td>{{ predm.p2 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+            {% if dz.d2 %}
+                <td>{{ dz.d2 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+
+        </tr>
+        <tr>
+            {% if predm.p3 %}
+                <td>{{ predm.p3 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+            {% if dz.d3 %}
+                <td>{{ dz.d3 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+
+        </tr>
+        <tr>
+            {% if predm.p4 %}
+                <td>{{ predm.p4 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+            {% if dz.d4 %}
+                <td>{{ dz.d4 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+
+        </tr>
+        <tr>
+            {% if predm.p5 %}
+                <td>{{ predm.p5 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+            {% if dz.d5 %}
+                <td>{{ dz.d5 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+
+        </tr>
+        <tr>
+            {% if predm.p6 %}
+                <td>{{ predm.p6 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+            {% if dz.d6 %}
+                <td>{{ dz.d6 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+
+        </tr>
+        <tr>
+            {% if predm.p7 %}
+                <td>{{ predm.p7 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+            {% if dz.d7 %}
+                <td>{{ dz.d7 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+
+        </tr>
+    </table>
+{% elif table == 2 %}
+    <form method="POST" action="/changeJurnal/">
+        {% csrf_token %}
+        <table class="container" border="1">
+            <tr>
+                <th>ФИО</th>
+                <th>Класс</th>
+                <th colspan="99">Оценки</th>
+            </tr>
+            {% for i in goodUsers %}
+                {% if forloop.first %}
+                    <input type="hidden" id='foo' name="counter" defaultValue="{{ forloop.last0 }}">
+
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function (event) {
+                            document.getElementById('foo').value = '{{ forloop.revcounter0 }}';
+                        });
+                    </script>
+
+                {% endif %}
+
+                <tr>
+                    <td>{{ i.FIO }}</td>
+                    <td>{{ i.clas }}</td>
+                    {% if us.predmet == "Математика" %}
+                        {% for j in arrJur %}
+                            {% if forloop.counter0 == 0 %}
+                                <input type="hidden" id='counterChildMat{{ forloop.parentloop.counter0 }}'
+                                       name="counterChildMat{{ forloop.parentloop.counter0 }}"
+                                       defaultValue="{{ forloop.last0 }}">
+                                <input type="hidden" id='usermat{{ forloop.parentloop.counter0 }}'
+                                       name="usermat{{ forloop.parentloop.counter0 }}">
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function (event) {
+                                        document.getElementById('counterChildMat{{ forloop.parentloop.counter0 }}').value = '{{ forloop.revcounter0 }}';
+                                    });
+                                </script>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function (event) {
+                                        document.getElementById('usermat{{ forloop.parentloop.counter0 }}').value = '{{ i.user_info }}';
+                                    });
+                                </script>
+                            {% endif %}
+                            {% if j.user == i.user_info %}
+
+                                <td><select class="in"
+                                           id="mat{{ forloop.parentloop.counter0 }}{{ forloop.counter0 }}"
+                                           name='mat{{ forloop.parentloop.counter0 }}{{ forloop.counter0 }}'>
+                                  <option>5</option>
+                                  <option>4</option>
+                                  <option>3</option>
+                                  <option>2</option>
+                                </select></td>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function (event) {
+                                        document.getElementById('mat{{ forloop.parentloop.counter0 }}{{ forloop.counter0 }}').value = '{{ j.num }}';
+                                    });
+                                </script>
+
+
+                            {% endif %}
+                        {% endfor %}
+
+                    {% elif us.predmet == "Русский" %}
+                        {% for j in arrJur %}
+                            {% if forloop.counter0 == 0 %}
+                                <input type="hidden" id='counterChildRus{{ forloop.parentloop.counter0 }}'
+                                       name="counterChildRus{{ forloop.parentloop.counter0 }}"
+                                       defaultValue="{{ forloop.last0 }}">
+                                <input type="hidden" id='userrus{{ forloop.parentloop.counter0 }}'
+                                       name="userrus{{ forloop.parentloop.counter0 }}">
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function (event) {
+                                        document.getElementById('counterChildRus{{ forloop.parentloop.counter0 }}').value = '{{ forloop.revcounter0 }}';
+                                    });
+                                </script>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function (event) {
+                                        document.getElementById('userrus{{ forloop.parentloop.counter0 }}').value = '{{ i.user_info }}';
+                                    });
+                                </script>
+                            {% endif %}
+                            {% if j.user == i.user_info %}
+
+                                <td><select id="rus{{ forloop.parentloop.counter0 }}{{ forloop.counter0 }}"
+                                           name='rus{{ forloop.parentloop.counter0 }}{{ forloop.counter0 }}'>
+                                  <option>5</option>
+                                  <option>4</option>
+                                  <option>3</option>
+                                  <option>2</option>
+                                </select></td>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function (event) {
+                                        document.getElementById('rus{{ forloop.parentloop.counter0 }}{{ forloop.counter0 }}').value = '{{ j.num }}';
+                                    });
+                                </script>
+                            {% endif %}
+                        {% endfor %}
+                    {% elif us.predmet == "Биология" %}
+                        {% for j in arrJur %}
+                            {% if forloop.counter0 == 0 %}
+                                <input type="hidden" id='counterChildBio{{ forloop.parentloop.counter0 }}'
+                                       name="counterChildBio{{ forloop.parentloop.counter0 }}"
+                                       defaultValue="{{ forloop.last0 }}">
+                                <input type="hidden" id='userbio{{ forloop.parentloop.counter0 }}'
+                                       name="userbio{{ forloop.parentloop.counter0 }}">
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function (event) {
+                                        document.getElementById('counterChildBio{{ forloop.parentloop.counter0 }}').value = '{{ forloop.revcounter0 }}';
+                                    });
+                                </script>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function (event) {
+                                        document.getElementById('userbio{{ forloop.parentloop.counter0 }}').value = '{{ i.user_info }}';
+                                    });
+                                </script>
+                            {% endif %}
+                            {% if j.user == i.user_info %}
+
+                                <td><select id="bio{{ forloop.parentloop.counter0 }}{{ forloop.counter0 }}"
+                                           name='bio{{ forloop.parentloop.counter0 }}{{ forloop.counter0 }}'>
+                                  <option>5</option>
+                                  <option>4</option>
+                                  <option>3</option>
+                                  <option>2</option>
+                                </select></td>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function (event) {
+                                        document.getElementById('bio{{ forloop.parentloop.counter0 }}{{ forloop.counter0 }}').value = '{{ j.num }}';
+                                    });
+                                </script>
+                            {% endif %}
+                        {% endfor %}
+                    {% elif us.predmet == 'Химия' %}
+                        {% for j in arrJur %}
+                            {% if forloop.counter0 == 0 %}
+                                <input type="hidden" id='counterChildHim{{ forloop.parentloop.counter0 }}'
+                                       name="counterChildHim{{ forloop.parentloop.counter0 }}"
+                                       defaultValue="{{ forloop.last0 }}">
+                                <input type="hidden" id='userhim{{ forloop.parentloop.counter0 }}'
+                                       name="userhim{{ forloop.parentloop.counter0 }}">
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function (event) {
+                                        document.getElementById('counterChildHim{{ forloop.parentloop.counter0 }}').value = '{{ forloop.revcounter0 }}';
+                                    });
+                                </script>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function (event) {
+                                        document.getElementById('userhim{{ forloop.parentloop.counter0 }}').value = '{{ i.user_info }}';
+                                    });
+                                </script>
+                            {% endif %}
+                            {% if j.user == i.user_info %}
+
+                                <td><select id="him{{ forloop.parentloop.counter0 }}{{ forloop.counter0 }}"
+                                           name='him{{ forloop.parentloop.counter0 }}{{ forloop.counter0 }}'>
+                                  <option>5</option>
+                                  <option>4</option>
+                                  <option>3</option>
+                                  <option>2</option>
+                                </select></td>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function (event) {
+                                        document.getElementById('him{{ forloop.parentloop.counter0 }}{{ forloop.counter0 }}').value = '{{ j.num }}';
+                                    });
+                                </script>
+                            {% endif %}
+                        {% endfor %}
+                    {% elif us.predmet == "Физра" %}
+                        {% for j in arrJur %}
+                            {% if forloop.counter0 == 0 %}
+                                <input type="hidden" id='counterChildFizra{{ forloop.parentloop.counter0 }}'
+                                       name="counterChildFizra{{ forloop.parentloop.counter0 }}"
+                                       defaultValue="{{ forloop.last0 }}">
+                                <input type="hidden" id='userfizra{{ forloop.parentloop.counter0 }}'
+                                       name="userfizra{{ forloop.parentloop.counter0 }}">
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function (event) {
+                                        document.getElementById('counterChildFizra{{ forloop.parentloop.counter0 }}').value = '{{ forloop.revcounter0 }}';
+                                    });
+                                </script>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function (event) {
+                                        document.getElementById('userfizra{{ forloop.parentloop.counter0 }}').value = '{{ i.user_info }}';
+                                    });
+                                </script>
+                            {% endif %}
+                            {% if j.user == i.user_info %}
+
+                                <td><select id="fizra{{ forloop.parentloop.counter0 }}{{ forloop.counter0 }}"
+                                           name='fizra{{ forloop.parentloop.counter0 }}{{ forloop.counter0 }}'>
+                                  <option>5</option>
+                                  <option>4</option>
+                                  <option>3</option>
+                                  <option>2</option>
+                                </select></td>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function (event) {
+                                        document.getElementById('fizra{{ forloop.parentloop.counter0 }}{{ forloop.counter0 }}').value = '{{ j.num }}';
+                                    });
+                                </script>
+                            {% endif %}
+                        {% endfor %}
+                    {% elif us.predmet == "ОБЖ" %}
+                        {% for j in arrJur %}
+                            {% if forloop.counter0 == 0 %}
+                                <input type="hidden" id='counterChildObj{{ forloop.parentloop.counter0 }}'
+                                       name="counterChildObj{{ forloop.parentloop.counter0 }}"
+                                       defaultValue="{{ forloop.last0 }}">
+                                <input type="hidden" id='userobj{{ forloop.parentloop.counter0 }}'
+                                       name="userobj{{ forloop.parentloop.counter0 }}">
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function (event) {
+                                        document.getElementById('counterChildObj{{ forloop.parentloop.counter0 }}').value = '{{ forloop.revcounter0 }}';
+                                    });
+                                </script>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function (event) {
+                                        document.getElementById('userobj{{ forloop.parentloop.counter0 }}').value = '{{ i.user_info }}';
+                                    });
+                                </script>
+                            {% endif %}
+                            {% if j.user == i.user_info %}
+
+                                <td><select id="obj{{ forloop.parentloop.counter0 }}{{ forloop.counter0 }}"
+                                           name='obj{{ forloop.parentloop.counter0 }}{{ forloop.counter0 }}'>
+                                  <option>5</option>
+                                  <option>4</option>
+                                  <option>3</option>
+                                  <option>2</option>
+                                </select></td>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function (event) {
+                                        document.getElementById('obj{{ forloop.parentloop.counter0 }}{{ forloop.counter0 }}').value = '{{ j.num }}';
+                                    });
+                                </script>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        {% for j in arrJur %}
+                            {% if forloop.counter0 == 0 %}
+                                <input type="hidden" id='counterChildFizika{{ forloop.parentloop.counter0 }}'
+                                       name="counterChildFizika{{ forloop.parentloop.counter0 }}"
+                                       defaultValue="{{ forloop.last0 }}">
+                                <input type="hidden" id='userfizika{{ forloop.parentloop.counter0 }}'
+                                       name="userfizika{{ forloop.parentloop.counter0 }}">
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function (event) {
+                                        document.getElementById('counterChildFizika{{ forloop.parentloop.counter0 }}').value = '{{ forloop.revcounter0 }}';
+                                    });
+                                </script>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function (event) {
+                                        document.getElementById('userfizika{{ forloop.parentloop.counter0 }}').value = '{{ i.user_info }}';
+                                    });
+                                </script>
+                            {% endif %}
+                            {% if j.user == i.user_info %}
+
+                                <td><select id="fizika{{ forloop.parentloop.counter0 }}{{ forloop.counter0 }}"
+                                           name='fizika{{ forloop.parentloop.counter0 }}{{ forloop.counter0 }}'>
+                                  <option>5</option>
+                                  <option>4</option>
+                                  <option>3</option>
+                                  <option>2</option>
+                                </select></td>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function (event) {
+                                        document.getElementById('fizika{{ forloop.parentloop.counter0 }}{{ forloop.counter0 }}').value = '{{ j.num }}';
+                                    });
+                                </script>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+        <button style="--clr:#0FF0FC" type="submit" class="addBtnnn1"><span>Сохранить</span><i></i></button>
+    </form>
+    <form method="POST" action="/home/jurnal/clas/add/">
+        {% csrf_token %}
+        <button style="--clr:#0FF0FC" class="addBtnn1" type="submit"><span>Добавить</span><i></i></button>
+    </form>
+
+{% elif table == 4 %}
+    {% if addJur %}
+        <form method="POST" action="/addJurnal/">
+            {% csrf_token %}
+            <select color="black" placeholder='ФИО' name="addJurFio" class="fioInput">
+                {% for i in allUs %}
+                    {% if i.userStatus == 'Ученик' %}
+                        <option>{{ i.FIO }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            <input class="a" type='date' placeholder='Дата' name="addJurDate">
+            <select class="predmInput" placeholder='Класс' name="addJurClas">
+                <option>1-А</option>
+                <option>1-Б</option>
+                <option>1-В</option>
+                <option>2-А</option>
+                <option>2-Б</option>
+                <option>2-В</option>
+                <option>3-А</option>
+                <option>3-Б</option>
+                <option>3-В</option>
+                <option>4-А</option>
+                <option>4-Б</option>
+                <option>4-В</option>
+                <option>5-А</option>
+                <option>5-Б</option>
+                <option>5-В</option>
+                <option>6-А</option>
+                <option>6-Б</option>
+                <option>6-В</option>
+                <option>7-А</option>
+                <option>7-Б</option>
+                <option>7-В</option>
+                <option>8-А</option>
+                <option>8-Б</option>
+                <option>8-В</option>
+                <option>9-А</option>
+                <option>9-Б</option>
+                <option>9-В</option>
+            </select>
+            <select class="numInput" placeholder='Оценка' name="addJurNum">
+              <option>5</option>
+              <option>4</option>
+              <option>3</option>
+              <option>2</option>
+            </select>
+            <button style="--clr:#0FF0FC" class="addBtnn1" type="submit"><span>Добавить</span><i></i></button>
+        </form>
+    {% else %}
+        <form method="POST" action="/home/jurnal/clas/">
+            {% csrf_token %}
+            <select align="center" placeholder="Класс" name="clas" class="clasInput"
+                   onchange="document.getElementById('showMet').removeAttribute('hidden')">
+                <option>1-А</option>
+                <option>1-Б</option>
+                <option>1-В</option>
+                <option>2-А</option>
+                <option>2-Б</option>
+                <option>2-В</option>
+                <option>3-А</option>
+                <option>3-Б</option>
+                <option>3-В</option>
+                <option>4-А</option>
+                <option>4-Б</option>
+                <option>4-В</option>
+                <option>5-А</option>
+                <option>5-Б</option>
+                <option>5-В</option>
+                <option>6-А</option>
+                <option>6-Б</option>
+                <option>6-В</option>
+                <option>7-А</option>
+                <option>7-Б</option>
+                <option>7-В</option>
+                <option>8-А</option>
+                <option>8-Б</option>
+                <option>8-В</option>
+                <option>9-А</option>
+                <option>9-Б</option>
+                <option>9-В</option>
+            </select>
+            <button style="--clr:#0FF0FC" id="showMet" type="submit" class="addBtnn1" hidden>
+                <span>Показать</span><i></i></button>
+        </form>
+    {% endif %}
+{% endif %}

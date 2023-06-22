@@ -1,0 +1,387 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/main_css.css' %}">
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+    <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                    Настройки
+                </a>
+
+                <div class="navbar-dropdown">
+                    <a class="navbar-item" href="/home/">
+                        оценки
+                    </a>
+                    <a class="navbar-item" href="/home/rasp/">
+                        расписание
+                    </a>
+                    <a class="navbar-item" href="/home/graph/">
+                        график успеваемости
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
+                    <a class="button is-light" href="/logout/">
+                        Выйти
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+<br><br><br>
+{% if table == 0 %}
+
+    <table border="1" id="PupTbl" class="container">
+        <tr>
+            <th>Математика</th>
+            <th>Русский</th>
+            <th>Биология</th>
+            <th>Химия</th>
+            <th>Физра</th>
+            <th>ОБЖ</th>
+            <th>Физика</th>
+            <th>Дата</th>
+        </tr>
+
+
+        {% for i in allJur %}
+
+            <tr>
+                {% if i.predmet == 'Математика' %}
+                    <td>{{ i.num }}</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+                {% if i.predmet == 'Русский' %}
+                    <td>{{ i.num }}</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+                {% if i.predmet == 'Биология' %}
+                    <td>{{ i.num }}</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+                {% if i.predmet == 'Химия' %}
+                    <td>{{ i.num }}</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+                {% if i.predmet == 'Физра' %}
+                    <td>{{ i.num }}</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+                {% if i.predmet == 'ОБЖ' %}
+                    <td>{{ i.num }}</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+                {% if i.predmet == 'Физика' %}
+                    <td>{{ i.num }}</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+                <td>{{ i.date|date:"Y-m-d" }}</td>
+            </tr>
+
+        {% endfor %}
+
+    </table>
+{% elif table == 19 %}
+    <table style="display:none" id="PupTbl1" class="container">
+        <tr>
+            <th>Математика</th>
+            <th>Русский</th>
+            <th>Биология</th>
+            <th>Химия</th>
+            <th>Физра</th>
+            <th>ОБЖ</th>
+            <th>Физика</th>
+            <th>Дата</th>
+        </tr>
+
+
+        {% for i in allJur %}
+
+            <tr>
+                {% if i.predmet == 'Математика' %}
+                    <td>{{ i.num }}</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+                {% if i.predmet == 'Русский' %}
+                    <td>{{ i.num }}</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+                {% if i.predmet == 'Биология' %}
+                    <td>{{ i.num }}</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+                {% if i.predmet == 'Химия' %}
+                    <td>{{ i.num }}</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+                {% if i.predmet == 'Физра' %}
+                    <td>{{ i.num }}</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+                {% if i.predmet == 'ОБЖ' %}
+                    <td>{{ i.num }}</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+                {% if i.predmet == 'Физика' %}
+                    <td>{{ i.num }}</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+                <td>{{ i.date|date:"Y-m-d" }}</td>
+            </tr>
+
+        {% endfor %}
+
+    </table>
+    <script src="https://cdn.anychart.com/js/latest/anychart-bundle.min.js"></script>
+    <script>
+        anychart.onDocumentLoad(function () {
+            var oTable = document.getElementById('PupTbl1');
+            var five = 0;
+            var four = 0;
+            var three = 0;
+            var two = 0;
+
+            var rowLength = oTable.rows.length;
+
+
+            for (i = 0; i < rowLength; i++) {
+
+                //gets cells of current row
+                var oCells = oTable.rows.item(i).cells;
+
+                //gets amount of cells of current row
+                var cellLength = oCells.length;
+
+                //loops through each cell in current row
+                for (var j = 0; j < cellLength; j++) {
+                    // get your cell info here
+
+                    var cellVal = oCells.item(j).innerHTML;
+                    if (cellVal == "5") {
+                        five = five + 1;
+                    } else if (cellVal == "4") {
+                        four = four + 1;
+                    } else if (cellVal == "3") {
+                        three = three + 1;
+                    } else if (cellVal == "2") {
+                        two = two + 1;
+                    }
+                    console.log(cellVal);
+                }
+            }
+
+            var data = [
+                {x: "5", value: five},
+                {x: "4", value: four},
+                {x: "3", value: three},
+                {x: "2", value: two},
+            ];
+
+            chart = anychart.column(data);
+
+            chart.title("График успеваемости");
+            chart.title().fontColor('#000');
+            chart.container("graph").draw();
+
+            chart.background().fill({
+                keys: ["#b3bab397", "#66f", "#4d4d4d"],
+                angle: 0,
+            });
+            chart.labels().fontColor('#000');
+
+
+        });
+    </script>
+<div id="graph" class="graph"></div>
+{% elif table == 1 %}
+    <form method="POST" action="/home/rasp/raspNextDay/">
+        {% csrf_token %}
+        <input type="hidden" name="date" id="date">
+        <script>
+            document.addEventListener('DOMContentLoaded', function (event) {
+                document.getElementById('date').value = '{{ raspp.date }}';
+            });
+        </script>
+        <button style="--clr:#0FF0FC" class="date"><span>Следующий</span><i></i></button>
+    </form>
+    <form method="POST" action="/home/rasp/raspPrevDay/">
+        {% csrf_token %}
+        <input type="hidden" name="date" id="date2">
+        <script>
+            document.addEventListener('DOMContentLoaded', function (event) {
+                document.getElementById('date2').value = '{{ raspp.date }}';
+            });
+        </script>
+        <button style="--clr:#0FF0FC" class="date2"><span>предыдущий</span><i></i></button>
+    </form>
+    <table border="1" class="container">
+        <tr>
+            {% if raspp.date %}
+                <th rowspan="8" align="center" width="140px">{{ raspp.date|date:"Y-m-d" }}</th>
+            {% else %}
+                <th rowspan="8" align="center" width="140px">{{ d }}</th>
+            {% endif %}
+            <th>предмет</th>
+            <th width="100px">дз</th>
+            <th>тема</th>
+        </tr>
+        <tr>
+            {% if predm.p1 %}
+                <td>{{ predm.p1 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+            {% if dz.d1 %}
+                <td>{{ dz.d1 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+            {% if topic.t1 %}
+                <td>{{ topic.t1 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+        </tr>
+        <tr>
+            {% if predm.p2 %}
+                <td>{{ predm.p2 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+            {% if dz.d2 %}
+                <td>{{ dz.d2 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+            {% if topic.t2 %}
+                <td>{{ topic.t2 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+        </tr>
+        <tr>
+            {% if predm.p3 %}
+                <td>{{ predm.p3 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+            {% if dz.d3 %}
+                <td>{{ dz.d3 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+            {% if topic.t3 %}
+                <td>{{ topic.t3 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+        </tr>
+        <tr>
+            {% if predm.p4 %}
+                <td>{{ predm.p4 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+            {% if dz.d4 %}
+                <td>{{ dz.d4 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+            {% if topic.t4 %}
+                <td>{{ topic.t4 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+        </tr>
+        <tr>
+            {% if predm.p5 %}
+                <td>{{ predm.p5 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+            {% if dz.d5 %}
+                <td>{{ dz.d5 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+            {% if topic.t5 %}
+                <td>{{ topic.t5 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+        </tr>
+        <tr>
+            {% if predm.p6 %}
+                <td>{{ predm.p6 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+            {% if dz.d6 %}
+                <td>{{ dz.d6 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+            {% if topic.t6 %}
+                <td>{{ topic.t6 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+        </tr>
+        <tr>
+            {% if predm.p7 %}
+                <td>{{ predm.p7 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+            {% if dz.d7 %}
+                <td>{{ dz.d7 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+            {% if topic.t7 %}
+                <td>{{ topic.t7 }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+        </tr>
+    </table>
+
+{% else %}
+    <form method="POST" action="/home/rasp/day/">
+        <input style="--c: #373B44;--b: 3px;--s:7px" type="date" name='day' class="a" id="dateCheck"
+               onchange="document.getElementById('Show').removeAttribute('hidden')">
+        {% csrf_token %}
+        <button style="--clr:#0FF0FC" type="submit" class="addBtnn1" id="Show" hidden><span>Показать</span><i></i>
+        </button>
+
+    </form>
+{% endif %}

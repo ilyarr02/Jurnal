@@ -1,0 +1,244 @@
+<style>
+body, html {
+    width: 100%;
+    height: 100%;
+
+
+}
+body {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    height: 100vh;
+    overflow-x: hidden;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.columns{
+    margin-top: 20px;
+}
+
+    table {
+	width: 800px;
+	border-collapse: collapse;
+	overflow: hidden;
+	box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+th,
+td {
+	padding: 15px;
+	background-color: rgba(255,255,255,0.2);
+	color: #fff;
+}
+
+th {
+	text-align: left;
+}
+
+thead {
+	th {
+		background-color: #55608f;
+	}
+}
+
+tbody {
+	tr {
+		&:hover {
+			background-color: rgba(255,255,255,0.3);
+		}
+	}
+	td {
+		position: relative;
+		&:hover {
+			&:before {
+				content: "";
+				position: absolute;
+				left: 0;
+				right: 0;
+				top: -9999px;
+				bottom: -9999px;
+				background-color: rgba(255,255,255,0.2);
+				z-index: -1;
+			}
+		}
+	}
+}
+
+</style>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+
+    <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                    Настройки
+                </a>
+
+                <div class="navbar-dropdown">
+                    <a class="navbar-item" href="/home/rasp/">
+                        Все пользователи
+                    </a>
+                    <a class="navbar-item" href="/home/pupils/">
+                        Ученики
+                    </a>
+                    <a class="navbar-item" href="/home/teachers/">
+                        Учителя
+                    </a>
+                    <a class="navbar-item" href="/home/metodists/">
+                        Методисты
+                    </a>
+                    <hr class="navbar-divider">
+                    {% if not allInfo %}
+                        <a class="navbar-item" href="/home/allInfo/">
+                            показать логин/пароль
+                        </a>
+                    {% else %}
+                        <a class="navbar-item" href="/home/notAllInfo/">
+                            скрыть логин/пароль
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="columns">
+                <div class="column">
+                    <form method="POST" action="/add/">
+                        {% csrf_token %}
+                        <select class="select" name="status">
+                            <option>Ученик</option>
+                            <option>Учитель</option>
+                            <option>Методист</option>
+                        </select>
+                        <button type="submit" class="button"><span>Добавить</span><i></i></button>
+                    </form>
+                </div>
+                <div class="column">
+                    <form method="POST" action="/del/">
+                        {% csrf_token %}
+                        <div class="field has-addons">
+                            <div class="control">
+                                <input placeholder="id" name="id" type="text" size="40" class="input">
+                            </div>
+                            <div class="control">
+                                <button type="submit" class="button is-info">Удалить</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
+                    <a class="button is-light" href="/logout/">
+                        Выйти
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</nav>
+<br><br><br>
+{% if allInfo %}
+        <table style="height: 50px" class = "container" border="1">
+            <tr>
+                    <th>id</th>
+                    <th>логин</th>
+                    <th>пароль</th>
+                </tr>
+                {% for i in allUs %}
+                    {% if table == 0 %}
+                        <tr>
+                            <td>{{ i.pk }}</td>
+                            <td>{{ i.user_info.username }}</td>
+                            <td>{{ i.pas }}</td>
+                        </tr>
+                    {% elif table == 1 %}
+                        {% if i.userStatus == 'Учитель' %}
+                            <tr>
+                                <td>{{ i.pk }}</td>
+                                <td>{{ i.user_info.username }}</td>
+                                <td>{{ i.pas }}</td>
+                            </tr>
+                        {% endif %}
+                    {% else %}
+                        {% if i.userStatus == 'Ученик' %}
+                            <tr>
+                                <td>{{ i.pk }}</td>
+                                <td>{{ i.user_info.username }}</td>
+                                <td>{{ i.pas }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+        </table>
+        {% endif %}
+        {% if not allInfo %}
+        <table class="container" border="1">
+            <tr>
+                    <th>id</th>
+                    <th>Имя пользователя</th>
+                    <th>Статус пользователя</th>
+                </tr>
+            {% for i in allUs %}
+                {% if table == 0 %}
+                        <tr>
+                            <td>{{ i.pk }}</td>
+                            <td>{{ i.FIO }}</td>
+                            <td>{{ i.userStatus }}</td>
+                        </tr>
+                    {% elif table == 1 %}
+                        {% if i.userStatus == 'Учитель' %}
+                            <tr>
+                                <td>{{ i.pk }}</td>
+                                <td>{{ i.FIO }}</td>
+                                <td>{{ i.userStatus }}</td>
+                            </tr>
+                        {% endif %}
+                    {% elif table == 2 %}
+                        {% if i.userStatus == 'Ученик' %}
+                            <tr>
+                                <td>{{ i.pk }}</td>
+                                <td>{{ i.FIO }}</td>
+                                <td>{{ i.userStatus }}</td>
+                            </tr>
+                        {% endif %}
+                    {% else %}
+                        {% if i.userStatus == 'Методист' %}
+                            <tr>
+                                <td>{{ i.pk }}</td>
+                                <td>{{ i.FIO }}</td>
+                                <td>{{ i.userStatus }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endif %}
+            {% endfor %}
+        </table>
+        {% endif %}
+
+
+
+
+
